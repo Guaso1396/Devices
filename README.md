@@ -161,19 +161,3 @@ Tu Nombre
 https://github.com/Guaso1396
 
 ---
-
-## Agradecimientos
-
-https://restful-api.dev
-https://developer.android.com/jetpack/compose
-https://square.github.io/retrofit/
-
----
-
-## Referencias
-
-https://developer.android.com/docs
-https://developer.android.com/jetpack/compose
-https://square.github.io/retrofit/
-https://m3.material.io/
-https://kotlinlang.org/docs/coroutines-overview.html
