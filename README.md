@@ -1,12 +1,25 @@
 # Devices App
 
-Aplicación Android desarrollada en Kotlin con Jetpack Compose que consume la API pública de https://api.restful-api.dev para mostrar un catálogo de dispositivos electrónicos (teléfonos, tablets, relojes, audífonos, etc.).
+Aplicación Android desarrollada en Android Studio con Kotlin y Jetpack Compose que consume la API pública de https://api.restful-api.dev para mostrar un catálogo de dispositivos electrónicos como teléfonos, tablets, relojes y audífonos.
 
 ---
 
 ## Descripción
 
-La app obtiene una lista de dispositivos desde el endpoint `/objects` y los presenta en una lista desplazable con su nombre, color, capacidad y precio. Cada ítem incluye un ícono de teléfono y un separador visual.
+La app obtiene una lista de dispositivos desde el endpoint /objects y los presenta en una lista desplazable con su nombre, color, capacidad y precio. Cada ítem incluye un ícono de teléfono y un separador visual.
+
+Proyecto desarrollado en Android Studio, versión Ladybug o superior.
+
+---
+
+## Características principales
+
+* Lista desplazable de dispositivos electrónicos
+* Muestra nombre, color, capacidad y precio de cada dispositivo
+* Ícono de teléfono en cada ítem
+* Separador visual entre elementos
+* Consumo de API REST con Retrofit
+* Manejo de datos inconsistentes mediante SerializedName con alternate
 
 ---
 
@@ -26,8 +39,14 @@ La app obtiene una lista de dispositivos desde el endpoint `/objects` y los pres
 
 ## Estructura del proyecto
 
-<img width="292" height="608" alt="image" src="https://github.com/user-attachments/assets/e24d1cc9-b030-4e18-bc97-22848dcb99ba" />
+El proyecto se organiza en el paquete com.example.myapplication o similar, con los siguientes archivos principales:
 
+* MainActivity.kt: punto de entrada y configuración de Compose
+* MainScreen.kt: pantalla principal que muestra la lista de dispositivos
+* DeviceItem.kt: Composable que renderiza cada dispositivo
+* DeviceService.kt: interfaz Retrofit para consumir la API
+* Modelos de datos: Device y Specs
+* Archivos de tema y configuración de Gradle
 
 ---
 
@@ -46,112 +65,52 @@ No usar Java 25 con Gradle 8.9.
 
 ## Configuración
 
-1. Clonar repositorio
-   git clone <url-del-repositorio>
-   cd Devices
-
-2. Verificar gradle.properties
-
-org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
-org.gradle.configuration-cache=true
-android.useAndroidX=true
-kotlin.code.style=official
-
-3. Configurar Gradle JDK en Android Studio (JDK 17 o 21)
-
-4. Sincronizar proyecto
-
-5. Ejecutar en emulador o dispositivo
+1. Clonar el repositorio
+2. Configurar Gradle JDK en Android Studio con JDK 17 o 21
+3. Sincronizar el proyecto
+4. Ejecutar en un emulador o dispositivo físico
 
 ---
 
 ## API
 
-Base URL: https://api.restful-api.dev
-Endpoint: GET /objects
+La aplicación utiliza la base URL https://api.restful-api.dev y el endpoint GET /objects.
 
-Ejemplo JSON:
-
-[
-{
-"id": "1",
-"name": "Google Pixel 6 Pro",
-"data": {
-"color": "Cloudy White",
-"capacity": "128 GB"
-}
-},
-{
-"id": "4",
-"name": "Apple iPhone 11, 64GB",
-"data": {
-"price": 389.99,
-"color": "Purple"
-}
-}
-]
+La API devuelve una lista de dispositivos. Cada dispositivo tiene id, name y data. El campo data puede contener color, capacity y price, aunque no todos los dispositivos incluyen los mismos campos.
 
 ---
 
 ## Modelos Kotlin
 
-data class Device(val id: Long, val name: String, val data: Specs?)
+El modelo Device tiene los campos id, name y data. El campo data es de tipo Specs y puede ser nulo.
 
-data class Specs(
-@SerializedName(value = "color", alternate = ["Color"])
-val color: String?,
-@SerializedName(value = "capacity", alternate = ["Capacity", "capacity GB"])
-val capacity: String?,
-@SerializedName(value = "price", alternate = ["Price"])
-val price: Float?
-)
+El modelo Specs tiene los campos color, capacity y price. Todos son opcionales. Se usa SerializedName con alternates para manejar variaciones en las claves del JSON, por ejemplo Color, Capacity, capacity GB y Price.
 
 ---
 
 ## Arquitectura
 
-UI (MainActivity / Compose)
-↓
-MainScreen / DeviceItem
-↓
-DeviceService (Retrofit)
-↓
-API externa
+La UI en MainActivity y Compose llama a MainScreen y DeviceItem. Luego se comunica con DeviceService mediante Retrofit. Finalmente, se conecta con la API externa.
 
 ---
 
 ## Problemas conocidos
 
-* Java 25 no soportado → usar JDK 17 o 21
-* android.useAndroidX faltante → agregar en gradle.properties
-* Datos inconsistentes en API → usar SerializedName con alternate
+* Java 25 no está soportado; usar JDK 17 o 21
+* Si falta android.useAndroidX, agregarlo en gradle.properties
+* La API puede devolver datos inconsistentes; usar SerializedName con alternate
+* Algunos dispositivos no traen todos los campos; validar nulos
 
 ---
 
 ## Mejoras futuras
 
-* ViewModel con StateFlow
-* Manejo de estados de carga y error
-* Pantalla de detalle
-* Caché con Room
-* Pruebas unitarias
-* Búsqueda y filtrado
-
----
-
-## Contribuciones
-
-1. Fork
-2. Crear rama
-3. Commit
-4. Push
-5. Pull Request
-
----
-
-## Licencia
-
-MIT
+* Implementar ViewModel con StateFlow
+* Añadir manejo de estados de carga y error
+* Crear pantalla de detalle
+* Agregar caché con Room
+* Realizar pruebas unitarias
+* Incluir búsqueda y filtrado
 
 ---
 
@@ -159,5 +118,3 @@ MIT
 
 Tu Nombre
 https://github.com/Guaso1396
-
----
