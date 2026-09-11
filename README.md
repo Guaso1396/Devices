@@ -111,10 +111,3 @@ La UI en MainActivity y Compose llama a MainScreen y DeviceItem. Luego se comuni
 * Agregar caché con Room
 * Realizar pruebas unitarias
 * Incluir búsqueda y filtrado
-
----
-
-## Autor
-
-Tu Nombre
-https://github.com/Guaso1396
